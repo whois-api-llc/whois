@@ -1,4 +1,8 @@
-# Making a query to Whois API web service
+# Warning
+> This version of Whois API is obsolete. It is strongly recommended to use [Whois API 2.0](https://github.com/whois-api-llc/whois2)
+
+
+## Making a query to Whois API web service
 
 [WhoisXmlApi.com](https://www.whoisxmlapi.com/) has been gathering domain
 Whois records for almost all gTLDs and ccTLDs for over a decade.
