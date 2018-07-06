@@ -1,18 +1,22 @@
 # Warning
-> This version of Whois API is obsolete. It is strongly recommended to use [Whois API 2.0](https://github.com/whois-api-llc/whois2)
+> This version of the API is deprecated. It is strongly recommended to use
+[Whois API 2.0](https://github.com/whois-api-llc/whois2)
 
+## Using the Whois API web service
 
-## Making a query to Whois API web service
+[Whois API](https://www.whoisxmlapi.com/whois-api-doc.php) provides domain
+names'/IP addresses' well-parsed and accurate registration
+details—also known as Whois Records—such as registrant names, emails,
+addresses, registrar info, creation/expiration dates etc. for most of the
+gTLDs and ccTLDs.
 
-[WhoisXmlApi.com](https://www.whoisxmlapi.com/) has been gathering domain
-Whois records for almost all gTLDs and ccTLDs for over a decade.
-This data is unified, consistent, well parsed, and accurate and provided
-through real-time APIs.
+Here you'll find examples of using the API implemented in multiple languages.
 
-Here you'll find examples of using
-[www.whoisxmlapi.com](https://www.whoisxmlapi.com/) Hosted Whois Web API
-implemented in multiple languages.
+You'll need a
+[WhoisXmlApi account](https://www.whoisxmlapi.com/user/create.php) to
+authenticate.
 
 Please, refer to
 [Whois API User Guide](https://www.whoisxmlapi.com/whois-api-guide.php) for
-authentication instructions.
+info on input parameters, request/response formats, authentication
+instructions and more.
