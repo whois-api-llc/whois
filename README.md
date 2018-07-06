@@ -16,7 +16,7 @@ You'll need a
 [WhoisXmlApi account](https://www.whoisxmlapi.com/user/create.php) to
 authenticate.
 
-Please, refer to
+Please, refer to the
 [Whois API User Guide](https://www.whoisxmlapi.com/whois-api-guide.php) for
 info on input parameters, request/response formats, authentication
 instructions and more.
