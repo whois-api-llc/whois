@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sample Javascript API Client</title>
+    <title>Sample Javascript Whois API Client</title>
     <script type="text/javascript">
+
+        var apiUrl = "https://www.whoisxmlapi.com/whoisserver/WhoisService";
         // Fill in your details
         var username = "Your whois api username";
         var password = "Your whois api password";
@@ -14,29 +16,41 @@
 
         function onPageLoad() {
             // Use a JSON resource
-            var url = "http://www.whoisxmlapi.com/whoisserver/WhoisService?domainName=" + domain + "&username=" + username + "&password=" + password + "&outputFormat=" + format;
+            var url = apiUrl
+                    + "?domainName=" + encodeURIComponent(domain)
+                    + "&username=" + encodeURIComponent(username)
+                    + "&password=" + encodeURIComponent(password)
+                    + "&outputFormat=" + encodeURIComponent(format);
 
-            // Dynamically Add a script to get our JSON data from a different server, avoiding cross origin problems
-            var head = document.getElementsByTagName('head')[0];
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
+            // Dynamically Add a script to get our JSON data from a different
+            // server, avoiding cross origin problems.
+
+            var head = document.getElementsByTagName("head")[0];
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+
+            // The function specified in jsonCallback will be called with a
+            // single argument representing the JSON object.
+
             script.src = url + "&callback=" + jsonCallback;
-            head.appendChild(script);
 
-            // The function specified in jsonCallback will be called with a single argument representing the JSON object
+            head.appendChild(script);
         }
 
         // Do something with the json result we get back
         function LoadJSON(result) {
             // Print out a nice informative string
-            document.body.innerHTML += "<div>JSON:</div>" + RecursivePrettyPrint(result);
+            document.body.innerHTML += "<div>JSON:</div>"
+                                    +  RecursivePrettyPrint(result);
         }
 
         function RecursivePrettyPrint(obj) {
             var str = "";
             for (var x in obj) {
                 if (obj.hasOwnProperty(x)) {
-                    str += '<div style="margin-left: 25px;border-left:1px solid black">' + x + ": ";
+                    str += '<div style="'
+                        +  "margin-left: 25px;border-left:1px solid black"
+                        +  '">' + x + ": ";
                     if (typeof(obj[x]) == "string")
                         str += obj[x];
                     else
@@ -47,8 +61,8 @@
 
             return str;
         }
+
     </script>
 </head>
-<body>
-</body>
+<body></body>
 </html>

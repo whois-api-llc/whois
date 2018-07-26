@@ -1,82 +1,92 @@
 <?php
+
 $username = 'Your whois api username';
-$apiKey = 'Your whois api api_key';
-$secret = 'Your whois api secret_key';
-$url = 'https://whoisxmlapi.com/whoisserver/WhoisService?';
+$apiKey = 'Your whois api key';
+$secret = 'Your whois api secret key';
+
+$url = 'https://whoisxmlapi.com/whoisserver/WhoisService';
+
 $timestamp = null;
+
 $domains = array(
     'google.com',
     'example.com',
     'whoisxmlapi.com',
     'twitter.com',
 );
+
 $digest = null;
 
-generateParameters($timestamp, $digest, $username, $apiKey, $secret);
+generate_params($timestamp, $digest, $username, $apiKey, $secret);
 
 foreach ($domains as $domain) {
     $response = request($url, $username, $timestamp, $digest, $domain);
+
     if (strpos($response, 'Request timeout') !== false) {
-        generateParameters($timestamp, $digest, $username, $apiKey, $secret);
+        generate_params($timestamp, $digest, $username, $apiKey, $secret);
         $response = request($url, $username, $timestamp, $digest, $domain);
     }
-    printResponse($response);
+
+    print_response($response);
     echo '----------------------------' . "\n";
 }
 
-function generateParameters(
-    &$timestamp, &$digest, $username, $apiKey, $secret
-)
+function generate_params(&$timestamp, &$digest, $username, $apiKey, $secret)
 {
     $timestamp = round(microtime(true) * 1000);
-    $digest = generateDigest($username, $timestamp, $apiKey, $secret);
+    $digest = generate_digest($username, $timestamp, $apiKey, $secret);
 }
 
 function request($url, $username, $timestamp, $digest, $domain)
 {
-    $requestString = buildRequest($username, $timestamp, $digest, $domain);
+    $requestString = build_request($username, $timestamp, $digest, $domain);
+
     return file_get_contents($url . $requestString);
 }
 
-function printResponse($response)
+function print_response($response)
 {
     $responseArray = json_decode($response, true);
-    if (!empty($responseArray['WhoisRecord']['createdDate'])) {
+
+    if (! empty($responseArray['WhoisRecord']['createdDate'])) {
         echo 'Created Date: '
-            . $responseArray['WhoisRecord']['createdDate']
-            . "\n";
+             . $responseArray['WhoisRecord']['createdDate']
+             . PHP_EOL;
     }
-    if (!empty($responseArray['WhoisRecord']['expiresDate'])) {
+
+    if (! empty($responseArray['WhoisRecord']['expiresDate'])) {
         echo 'Expires Date: '
-            . $responseArray['WhoisRecord']['expiresDate']
-            . "\n";
+             . $responseArray['WhoisRecord']['expiresDate']
+             . PHP_EOL;
     }
-    if (!empty($responseArray['WhoisRecord']['registrant']['rawText'])) {
-        echo $responseArray['WhoisRecord']['registrant']['rawText'] . "\n";
+
+    if (! empty($responseArray['WhoisRecord']['registrant']['rawText'])) {
+        echo $responseArray['WhoisRecord']['registrant']['rawText'] . PHP_EOL;
     }
 }
 
-function generateDigest($username, $timestamp, $apiKey, $secretKey)
+function generate_digest($username, $timestamp, $apiKey, $secretKey)
 {
     $digest = $username . $timestamp . $apiKey;
     $hash = hash_hmac('md5', $digest, $secretKey);
+
     return urlencode($hash);
 }
 
-function buildRequest($username, $timestamp, $digest, $domain)
+function build_request($username, $timestamp, $digest, $domain)
 {
-    $requestString = 'requestObject=';
     $request = array(
         'u' => $username,
         't' => $timestamp
     );
+
     $requestJson = json_encode($request);
     $requestBase64 = base64_encode($requestJson);
-    $requestString .= urlencode($requestBase64);
-    $requestString .= '&digest=';
-    $requestString .= $digest;
-    $requestString .= '&domainName=';
-    $requestString .= $domain;
-    $requestString .= '&outputFormat=json';
+
+    $requestString = '?requestObject=' . urlencode($requestBase64)
+                   . '&digest=' . $digest
+                   . '&domainName=' . urlencode($domain)
+                   . '&outputFormat=json';
+
     return $requestString;
 }

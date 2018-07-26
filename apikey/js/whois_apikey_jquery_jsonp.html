@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Whois API jQuery Api Key Search Sample</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+    <script type="text/javascript">
+
+        var url = "https://www.whoisxmlapi.com/whoisserver/WhoisService";
+
+        var username = "Your whois api username";
+        var key = "Your whois api key";
+        var secret = "Your whois api secret key";
+
+        var domain = "example.com";
+
+        $(function() {
+            var time = (new Date()).getTime();
+
+            var jsonData = JSON.stringify({
+                t:time,
+                u:username
+            });
+
+            var req = btoa(unescape(encodeURIComponent(jsonData)));
+
+            var digest = CryptoJS.HmacMD5(username + time + key, secret)
+                                 .toString(CryptoJS.enc.Hex);
+            $.ajax(
+                {
+                    url: url,
+                    dataType: "jsonp",
+                    data: {
+                        requestObject: req,
+                        digest: digest,
+                        domainName: domain,
+                        outputFormat: "JSON"
+                    },
+                    success: function(data) {
+                        $("body").append(
+                            "<pre>" + JSON.stringify(data,null,2) + "</pre>");
+                    }
+                }
+            );
+        });
+
+    </script>
+</head>
+<body></body>
+</html>

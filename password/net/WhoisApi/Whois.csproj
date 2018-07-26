@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{237C394F-02AB-4688-A382-C69B283F4FFA}</ProjectGuid>
+    <ProjectGuid>{7770AFE6-4E96-4F5C-B5C4-5675CA2DEC2E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Whois</RootNamespace>
+    <RootNamespace>WhoisApi</RootNamespace>
     <AssemblyName>Whois</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="whois.cs" />
+    <Compile Include="WhoisApiSample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

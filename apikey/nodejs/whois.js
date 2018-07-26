@@ -1,13 +1,14 @@
-const https = require('https');
-const queryString = require('querystring');
-const crypto = require('crypto');
+var crypto = require('crypto');
+var https = require('https');
+var queryString = require('querystring');
 
-const url = 'https://whoisxmlapi.com/whoisserver/WhoisService?';
-const username = 'Your whois api username';
-const apiKey = 'Your whois api api_key';
-const secretKey = 'Your whois api secret_key';
+var username = 'Your whois api username';
+var apiKey = 'Your whois api key';
+var secretKey = 'Your whois api secret key';
 
-const domains = [
+var url = 'https://whoisxmlapi.com/whoisserver/WhoisService';
+
+var domains = [
     'google.com',
     'example.com',
     'whoisxmlapi.com',
@@ -20,16 +21,17 @@ for(var i in domains) {
 
 function getWhois(username, apiKey, secretKey, domain)
 {
-    timestamp = (new Date).getTime();
-    digest = generateDigest(username, timestamp, apiKey, secretKey);
+    var timestamp = (new Date).getTime();
+
+    var digest = generateDigest(username, timestamp, apiKey, secretKey);
+
     var requestString = buildRequest(username, timestamp, digest, domain);
-    https.get(url + requestString, function (res) {
-        const statusCode = res.statusCode;
+
+    https.get(url + '?' + requestString, function (res) {
+        var statusCode = res.statusCode;
 
         if (statusCode !== 200) {
-            console.log('Request failed: '
-                + statusCode
-            );
+            console.log('Request failed: ' + statusCode);
         }
 
         var rawData = '';
@@ -42,14 +44,16 @@ function getWhois(username, apiKey, secretKey, domain)
             printResponse(rawData);
         })
     }).on('error', function(e) {
-        console.log("Error: " + e.message);
+        console.log('Error: ' + e.message);
     });
 }
 
 function generateDigest(username, timestamp, apiKey, secretKey) {
     var data = username + timestamp + apiKey;
     var hmac = crypto.createHmac('md5', secretKey);
+
     hmac.update(data);
+
     return hmac.digest('hex');
 }
 
@@ -73,9 +77,10 @@ function buildRequest(username, timestamp, digest, domain) {
 }
 
 function printResponse(responseRaw) {
-    response = JSON.parse(responseRaw);
+    var response = JSON.parse(responseRaw);
+
     if (response.WhoisRecord) {
-        output = 'Contact email: ';
+        var output = 'Contact email: ';
         output += response.WhoisRecord.contactEmail;
         output += "\n";
         output += 'Created date: ';
