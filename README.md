@@ -10,11 +10,15 @@ details—also known as Whois Records—such as registrant names, emails,
 addresses, registrar info, creation/expiration dates etc. for most of the
 gTLDs and ccTLDs.
 
-Here you'll find examples of using the API implemented in multiple languages.
+Here you'll find examples of querying the API implemented in multiple
+languages.
 
 You'll need a
 [WhoisXmlApi account](https://www.whoisxmlapi.com/user/create.php) to
 authenticate.
+
+This API also supports
+[API key authentication](https://www.whoisxmlapi.com/user/management.php#api-key-management).
 
 Please, refer to the
 [Whois API User Guide](https://www.whoisxmlapi.com/whois-api-guide.php) for
